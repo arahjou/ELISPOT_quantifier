@@ -41,9 +41,9 @@ Contributions to improve `ELISPOT_quantifier` are welcome. Please follow the sta
 ## License
 ND
 
-## Contact
-This application is designe and developed by Ali Rahjouei.
-email: ali.rahjouei@gamil.com
+## Contact:
+* This application is designe and developed by Ali Rahjouei.
+* email: ali.rahjouei@gamil.com
 ---
 
 *Note: This README assumes a certain level of familiarity with ELISPOT assays and basic image processing techniques in Python. Adjust the content as needed based on the target audience and application complexity.*
