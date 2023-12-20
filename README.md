@@ -39,7 +39,7 @@ streamlit run ELISPOT_quantifier.py
 Contributions to improve `ELISPOT_quantifier` are welcome. Please follow the standard fork-pull request workflow.
 
 ## License
-ND
+This project is licensed under the MIT License
 
 ## Contact:
 * This application is designe and developed by Ali Rahjouei.
