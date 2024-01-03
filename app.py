@@ -5,14 +5,31 @@ from skimage import measure, filters
 import pandas as pd
 from PIL import Image, ImageEnhance
 
-# Function to adjust brightness and sharpness
-def adjust_image(image, brightness_factor, sharpness_factor):
+# Function to adjust brightness, sharpness, contrast, color, and saturation
+def adjust_image(image, brightness_factor, sharpness_factor, contrast_factor, color_factor, saturation_factor):
     pil_img = Image.fromarray(image)
+    
+    # Enhance brightness
     enhancer = ImageEnhance.Brightness(pil_img)
     image_bright = enhancer.enhance(brightness_factor)
+    
+    # Enhance sharpness
     enhancer = ImageEnhance.Sharpness(image_bright)
     image_sharp = enhancer.enhance(sharpness_factor)
-    return np.array(image_sharp)
+    
+    # Enhance contrast
+    enhancer = ImageEnhance.Contrast(image_sharp)
+    image_contrast = enhancer.enhance(contrast_factor)
+    
+    # Enhance color
+    enhancer = ImageEnhance.Color(image_contrast)
+    image_color = enhancer.enhance(color_factor)
+    
+    # Enhance saturation
+    enhancer = ImageEnhance.Brightness(image_color)  # PIL lacks a direct saturation enhancer, so use Brightness as a workaround
+    image_saturation = enhancer.enhance(saturation_factor)
+    
+    return np.array(image_saturation)
 
 # Function to quantify spots and return ROI coordinates
 def quantify_spots(image, threshold_level, min_size, max_size):
@@ -70,9 +87,12 @@ for uploaded_file in uploaded_files:
     max_size = st.number_input('Maximum Spot Size', 1, dynamic_max_size, 500)
     brightness_factor = st.slider('Brightness Factor', 0.5, 2.0, 1.0)
     sharpness_factor = st.slider('Sharpness Factor', 0.5, 2.0, 1.0)
+    contrast_factor = st.slider('Contrast Factor', 0.5, 2.0, 1.0)
+    color_factor = st.slider('Color Factor', 0.5, 2.0, 1.0)
+    saturation_factor = st.slider('Saturation Factor', 0.5, 2.0, 1.0)
 
-    # Adjust brightness and sharpness
-    adjusted_image = adjust_image(image, brightness_factor, sharpness_factor)
+    # Adjust brightness, sharpness, contrast, color, and saturation
+    adjusted_image = adjust_image(image, brightness_factor, sharpness_factor, contrast_factor, color_factor, saturation_factor)
 
     # Quantify spots and get ROIs
     spots, thresholded_img, rois = quantify_spots(adjusted_image, threshold_level, min_size, max_size)
